@@ -8,7 +8,8 @@ shifted by one. The XOR feedback is pre-computed into a lookup table so that the
 returns the value to add to the bottom of the LFSR. To stagger the bit toggles, a bit value table is used to
 select only the desired bit to update from the lfsr which is XORed into the GPIO output register.
 
-The counter uses another GPIO output register (PORTB) to measure performance with a logic analyzer.
+The counter uses another GPIO output register (PORTB) to measure performance with a logic analyzer. I think
+the loop runs 36 clock cycles on the 328p as I read 222 kHz on pin 8.
 */
 
 
@@ -27,7 +28,7 @@ void setup(){
 
 
 void loop(){
-    //72 cycles
+    // 36 cycles
     memcpy((void*)&upper, (void*)&lfsr+1, 1);
     lfsr <<= 1;
     lfsr += lookup[upper];
